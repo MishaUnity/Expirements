@@ -20,6 +20,8 @@ namespace Content.Client.Viewport
     /// </summary>
     public sealed class ScalingViewport : Control, IViewportControl
     {
+        public const string StylePropertyShader = "shader";
+
         [Dependency] private readonly IClyde _clyde = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
 
@@ -35,6 +37,8 @@ namespace Content.Client.Viewport
         private readonly List<CopyPixelsDelegate<Rgba32>> _queuedScreenshots = new();
 
         public int CurrentRenderScale => _curRenderScale;
+
+        public ShaderInstance? ShaderOverride { get; set; }
 
         /// <summary>
         ///     The eye to render.
@@ -152,6 +156,15 @@ namespace Content.Client.Viewport
 
                 _queuedScreenshots.Clear();
             }
+
+            ShaderInstance? shader = null;
+            if (ShaderOverride != null)
+                shader = ShaderOverride;
+            else if (TryGetStyleProperty(StylePropertyShader, out ShaderInstance? styleShader))
+                shader = styleShader;
+
+            if (shader != null)
+                handle.UseShader(shader);
 
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);

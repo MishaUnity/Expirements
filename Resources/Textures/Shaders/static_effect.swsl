@@ -1,0 +1,21 @@
+uniform highp float noiseIntensity;
+uniform highp float monoIntensity;
+
+highp float rand(highp vec2 co)
+{
+   return fract(sin(dot(vec2(co.x/60.0,co.y/60.0),vec2(12.9898,78.233)))*43758.5453);
+}
+
+void fragment() {
+    highp vec2 coords = FRAGCOORD.xy;
+
+    highp vec3 renderColor = zTexture(UV).xyz;
+    highp float monoRenderColor = (renderColor.x+renderColor.y+renderColor.z)/3.0;
+
+    highp vec3 noiseColor = vec3(rand(vec2(coords.x+TIME,coords.y)));
+    highp float mask = rand(vec2(coords.x,coords.y+TIME));
+
+    highp vec3 color = mix(mix(renderColor,vec3(monoRenderColor),monoIntensity), noiseColor, clamp(ceil(mask-1+noiseIntensity),0,1));
+
+    COLOR = vec4(color, 1.0);
+}

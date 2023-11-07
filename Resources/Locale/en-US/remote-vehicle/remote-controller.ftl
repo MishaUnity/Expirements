@@ -1,0 +1,10 @@
+remote-control-ui-default-title = Remote control
+remote-control-not-vehicle = Cannot be connected...
+remote-control-already-connected = Already have connection...
+remote-control-connected = Connected!
+remote-control-disconnect = Disconnected
+remote-control-disconnect-verb = Disconnect vehicle
+remote-control-ui-id-prefix = Now operation: 
+remote-control-ui-no-id = No connections
+remote-control-ui-vehicle-disabled = Turn on
+remote-control-ui-vehicle-enabled = Turn off

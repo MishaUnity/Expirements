@@ -319,3 +319,18 @@
       - id: SyringeTranexamicAcid
       - id: SyringeSpaceacillin
       - id: SyringeHyronalin
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateDroneBundle
+  id: ClothingBackpackDuffelSyndicateDroneBundleFilled
+  name: syndicate drone bundle
+  description: "Everything you need to remotely detonate the captain"
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndicateRemoteDrone
+      - id: BaseRemoteController
+      - id: RemoteModuleStealth
+      - id: RemoteModuleDetonation
+      - id: PowerCellMedium
+      - id: Screwdriver

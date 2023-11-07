@@ -1,0 +1,16 @@
+- type: entity
+  id: DroneElectronics
+  parent: BaseElectronics
+  name: drone electronics
+  description: An electronics board used in radio-controlled vehicles.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: drone_electronics
+    - type: AccessReader
+    - type: StaticPrice
+      price: 150
+    - type: Tag
+      tags:
+        - DroneElectronics
+        - DroneUsable

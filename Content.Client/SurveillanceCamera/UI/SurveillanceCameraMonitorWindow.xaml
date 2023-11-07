@@ -18,7 +18,8 @@
                                       VerticalExpand="True"
                                       HorizontalExpand="True"
                                       MinSize="500 500"
-                                      MouseFilter="Ignore" />
+                                      MouseFilter="Ignore"
+                                      Visible="True"/>
             <TextureRect VerticalExpand="True" HorizontalExpand="True" MinSize="500 500" Name="CameraViewBackground" />
         </Control>
     </BoxContainer>

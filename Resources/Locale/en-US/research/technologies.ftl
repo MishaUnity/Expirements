@@ -51,6 +51,7 @@ research-technology-gravity-manipulation = Gravity Manipulation
 research-technology-mobile-anomaly-tech = Mobile Anomaly Tech
 research-technology-rped = Rapid Part Exchange
 research-technology-super-parts = Super Parts
+research-technology-remote-vehicle = Radio-controlled Equipment
 
 research-technology-janitorial-equipment = Janitorial Equipment
 research-technology-laundry-tech = Laundry Tech

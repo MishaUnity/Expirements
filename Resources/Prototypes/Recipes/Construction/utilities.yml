@@ -843,3 +843,21 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
+
+# REMOTE DRONES
+- type: construction
+  name: remote drone
+  id: RemoteDrone
+  graph: BasicRemoteDrone
+  startNode: start
+  targetNode: basicRemoteDroneAssembled
+  category: construction-category-utilities
+  description: "A simple radio-controlled drone, has two slots for modules"
+  icon:
+    sprite: Objects/Misc/remote_drone.rsi
+    state: icon
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:TileNotBlocked

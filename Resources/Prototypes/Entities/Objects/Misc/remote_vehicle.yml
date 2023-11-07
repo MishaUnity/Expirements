@@ -1,0 +1,303 @@
+# Drones
+
+- type: entity
+  parent: BaseItem
+  id: RemoteVehicleBase
+  abstract: true
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery_slot: !type:ContainerSlot { }
+      module_container: !type:Container
+  - type: PowerCellSlot
+    cellSlotId: battery_slot
+  - type: ItemSlots
+    slots:
+      battery_slot:
+        name: power-cell-slot-component-slot-name-default
+  - type: PowerCellDraw
+    drawRate: 3
+    useRate: 0
+  - type: Item
+    size: 25
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
+          - !type:ExplodeBehavior
+  - type: RemoteVehicleModuleContainer
+    containerId: "module_container"
+    containerCapacity: 2
+    insertSound: "/Audio/Weapons/Guns/MagIn/revolver_magin.ogg"
+    ejectSound: "/Audio/Weapons/Guns/MagOut/revolver_magout.ogg"
+  - type: AmbientSound
+    sound: "/Audio/Effects/Vehicle/vehicleengineidle.ogg"
+    range: 3
+    volume: -16
+    enabled: false
+  - type: RemoteVehicle
+  - type: Eye
+  - type: InputMover   
+
+- type: entity
+  parent: RemoteVehicleBase
+  id: BasicRemoteDrone
+  name: remote-controlled drone
+  description: Do not try to touch blades, when it is turned on
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Objects/Misc/remote_drone.rsi
+    layers:
+    - state: base
+      map: ["enum.RemoteVehicleVisualsLayers.Base"]
+    - state: off
+      map: ["enum.RemoteVehicleVisualsLayers.Animated"]
+    - state: wires
+      map: ["enum.RemoteVehicleVisualsLayers.Wires"]
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 7.5
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: Construction
+    graph: BasicRemoteDrone
+    node: basicRemoteDroneAssembled
+  - type: AmbientSound
+    sound: "/Audio/Effects/Vehicle/propellerruning.ogg"
+    range: 10
+    volume: -3
+    enabled: false
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+
+- type: entity
+  parent: BaseItem
+  id: BasicRemoteDroneFrame
+  name: drone frame
+  components:
+  - type: Item
+    size: 25
+  - type: Sprite
+    sprite: Objects/Misc/remote_drone.rsi
+    state: assembly
+  - type: Construction
+    graph: BasicRemoteDrone
+    node: basicRemoteDroneFrame
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
+          - !type:ExplodeBehavior
+
+- type: entity
+  parent: RemoteVehicleBase
+  id: SyndicateRemoteDrone
+  name: syndicate drone
+  description: Is it worth being afraid of this little toy?
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Objects/Misc/syndi_drone.rsi
+    layers:
+    - state: base
+      map: ["enum.RemoteVehicleVisualsLayers.Base"]
+    - state: off
+      map: ["enum.RemoteVehicleVisualsLayers.Animated"]
+    - state: wires
+      map: ["enum.RemoteVehicleVisualsLayers.Wires"]
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: RemoteVehicleModuleContainer
+    containerId: "module_container"
+    containerCapacity: 1
+    insertSound: "/Audio/Weapons/Guns/MagIn/revolver_magin.ogg"
+    ejectSound: "/Audio/Weapons/Guns/MagOut/revolver_magout.ogg"
+
+# Controller
+
+- type: entity
+  name: remote controller
+  parent: BaseItem
+  id: BaseRemoteController
+  description: Simple control device.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/remote_controller.rsi
+    state: icon
+  - type: Item
+    size: 10
+  - type: ActivatableUI
+    key: enum.RemoteControlUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.RemoteControlUiKey.Key
+        type: RemoteControllerBoundUserInterface
+  - type: RemoteVehicleController
+
+# Modules
+
+- type: entity
+  parent: BaseItem
+  id: RemoteModuleBase
+  abstract: true
+  components:
+  - type: Item
+    size: 5
+  - type: RemoteVehicleModule
+
+- type: entity
+  name: stealth module
+  parent: RemoteModuleBase
+  id: RemoteModuleStealth
+  description: Suspicious module for a drone.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/remote_module.rsi
+    state: syndi
+  - type: RemoteVehicleModule
+    moduleName: remote-vehicle-module-stealth-name
+    moduleDesc: remote-vehicle-module-stealth-desc
+    accentColor: "#8e3636"
+  - type: RemoteVehicleStealthModule
+
+- type: entity
+  name: detonation module
+  parent: RemoteModuleBase
+  id: RemoteModuleDetonation
+  description: Suspicious module for a drone.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/remote_module.rsi
+    state: bomb
+  - type: Item
+    size: 5
+  - type: RemoteVehicleModule
+    moduleName: remote-vehicle-module-bomb-name
+    moduleDesc: remote-vehicle-module-bomb-desc
+    accentColor: "#632828"
+  - type: RemoteVehicleTimerTriggerModule
+    beepSound: /Audio/Machines/Nuke/general_beep.ogg
+  - type: Explosive
+    explosionType: DemolitionCharge
+    totalIntensity: 120
+    intensitySlope: 6
+    maxIntensity: 50
+    canCreateVacuum: false
+  - type: ExplodeOnTrigger
+
+- type: entity
+  name: container module
+  parent: RemoteModuleBase
+  id: RemoteModuleContainer
+  description: A module for drone;
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/remote_module.rsi
+    state: container
+  - type: RemoteVehicleModule
+    moduleName: remote-vehicle-module-container-name
+    moduleDesc: remote-vehicle-module-container-desc
+    accentColor: "#9ad041"
+  - type: ContainerContainer
+    containers:
+      items_container: !type:Container
+  - type: RemoteVehicleContainerModule
+    insertSound: "/Audio/Weapons/Guns/MagIn/revolver_magin.ogg"
+    ejectSound: "/Audio/Machines/disposalflush.ogg"
+
+- type: entity
+  name: signal boost module
+  parent: RemoteModuleBase
+  id: RemoteModuleSignal
+  description: A module for drone;
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/remote_module.rsi
+    state: radio
+  - type: RemoteVehicleModule
+    needUiCard: false
+  - type: RemoteVehicleSignalModule
+    radiuseMultiplier: 2
+
+- type: entity
+  name: acceleration module
+  parent: RemoteModuleBase
+  id: RemoteModuleSpeed
+  description: A module for drone;
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/remote_module.rsi
+    state: speed
+  - type: RemoteVehicleModule
+    needUiCard: false
+  - type: RemoteVehicleSpeedModule
+    speedMultiplier: 2
+
+- type: entity
+  name: broadcast module
+  parent: RemoteModuleBase
+  id: RemoteModuleCamera
+  description: A module for drone;
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/remote_module.rsi
+    state: camera
+  - type: RemoteVehicleModule
+    moduleName: remote-vehicle-module-camera-name
+    moduleDesc: remote-vehicle-module-camera-desc
+    accentColor: "#9ad041"
+  - type: RemoteVehicleCameraModule
+  - type: Eye
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraEntertainment
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+  - type: SurveillanceCameraMicrophone
+    blacklist:
+      components:
+        - SurveillanceCamera
+        - SurveillanceCameraMonitor
+        - RadioSpeaker
+  - type: ActiveListener
+    range: 10
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurveillanceCameraSetupUiKey.Camera
+        type: SurveillanceCameraSetupBoundUi
+

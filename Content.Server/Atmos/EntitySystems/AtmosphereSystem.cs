@@ -47,9 +47,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         InitializeGridAtmosphere();
         InitializeMap();
 
-
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
-
     }
 
     public override void Shutdown()

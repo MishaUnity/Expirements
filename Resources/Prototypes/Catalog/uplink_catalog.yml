@@ -1204,6 +1204,17 @@
   categories:
     - UplinkMisc
 
+- type: listing
+  id: UplinkSyndicateDroneBundle
+  name: uplink-syndicate-drone-bundle-name
+  description: uplink-syndicate-drone-bundle-desc
+  icon: { sprite: /Textures/Objects/Misc/syndi_drone.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateDroneBundleFilled
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkMisc
+
  # Pointless
 
 - type: listing

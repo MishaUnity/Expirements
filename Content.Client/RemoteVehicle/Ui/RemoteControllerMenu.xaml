@@ -1,0 +1,43 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:viewport="clr-namespace:Content.Client.Viewport"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc 'remote-control-ui-default-title'}"
+    MinSize="720 600"
+    SetSize="720 600">
+    <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <TextureRect Name="SignalIcon"
+                             MinSize="80 80"
+                             TextureScale="2 2"/>
+                <TextureRect Name="ChargeIcon"
+                             MinSize="80 80"
+                             TextureScale="2 2"/>
+            </BoxContainer>
+            <BoxContainer Name="ModuleCardsContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/> 
+        </BoxContainer>
+        <customControls:VSeparator StyleClasses="LowDivider" Margin="5 5 5 5"/>
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalAlignment="Right">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <Label Name="VehicleId"
+                       Margin="5 5 5 5"
+                       HorizontalExpand="True"/>
+                <Button Name="StartButton"
+                        Margin="5 5 5 5"
+                        Text="AAAAAAAAAA"
+                        HorizontalAlignment="Right"/>
+            </BoxContainer>
+            <Control Margin="5 5 5 5" Name="CameraViewBox" VerticalAlignment="Bottom">
+                <viewport:ScalingViewport Name="CameraView"
+                                          VerticalExpand="True"
+                                          HorizontalExpand="True"
+                                          MinSize="500 500"
+                                          MouseFilter="Ignore"/>
+                <TextureRect VerticalExpand="True" HorizontalExpand="True" MinSize="500 500" Name="CameraViewBackground" />
+            </Control>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

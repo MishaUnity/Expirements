@@ -260,6 +260,11 @@
       - WelderExperimental
       - JawsOfLife
       - ClothingEyesGlassesChemical
+      - BaseRemoteController
+      - RemoteModuleSignal
+      - RemoteModuleSpeed
+      - RemoteModuleCamera
+      - RemoteModuleContainer
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
@@ -268,6 +273,7 @@
       - WeaponLaserCannon
       - WeaponXrayCannon
       - WeaponTaser
+      - RemoteModuleDetonation
 
 - type: entity
   id: CircuitImprinter
@@ -358,6 +364,7 @@
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
       - MassMediaCircuitboard
+      - DroneElectronics
   - type: MaterialStorage
     whitelist:
       tags:

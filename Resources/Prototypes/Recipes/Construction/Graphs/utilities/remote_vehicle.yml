@@ -1,0 +1,56 @@
+- type: constructionGraph
+  id: BasicRemoteDrone
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: basicRemoteDroneFrame
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 4
+
+    - node: basicRemoteDroneFrame
+      entity: BasicRemoteDroneFrame
+      edges:
+        - to: basicRemoteDroneAssembled
+          steps:
+            - material: Cable
+              amount: 5
+              doAfter: 2
+            - tag: DroneElectronics
+              store: board
+              name: "drone electronics"
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "drone_electronics"
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 2
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 5
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 2
+
+    - node: basicRemoteDroneAssembled
+      entity: BasicRemoteDrone
+      edges:
+        - to: basicRemoteDroneFrame
+          completed:
+            - !type:GivePrototype
+              prototype: CableApcStack
+              amount: 5
+            - !type:GivePrototype
+              prototype: DroneElectronics
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
+              doAfter: 4

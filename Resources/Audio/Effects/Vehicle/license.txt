@@ -5,3 +5,5 @@ carhorn.ogg taken from /tg/station at commit https://github.com/tgstation/tgstat
 policesiren.ogg taken from freesound user blukotek at https://freesound.org/people/blukotek/sounds/431651/
 
 bicyclebell.ogg taken from freesound user 12gkopeckak at https://freesound.org/people/13gkopeckak/sounds/378911/
+
+propellerruning.ogg taken from freesound user caquet at https://freesound.org/people/caquet/sounds/432169/

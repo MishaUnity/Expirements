@@ -129,6 +129,23 @@
   recipeUnlocks:
   - RPED
 
+- type: technology
+  id: RemoteVehicleTech
+  name: research-technology-remote-vehicle
+  icon:
+    sprite: Objects/Misc/remote_drone.rsi
+    state: icon
+  discipline: Experimental
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - DroneElectronics
+  - BaseRemoteController
+  - RemoteModuleSignal
+  - RemoteModuleSpeed
+  - RemoteModuleCamera
+  - RemoteModuleContainer
+
 # Tier 3
 
 - type: technology

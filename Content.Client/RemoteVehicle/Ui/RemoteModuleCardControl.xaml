@@ -1,0 +1,25 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 0 0 12">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+            <PanelContainer Name="AccentColorPanel" HorizontalExpand="True">
+                <Label Name="Name" HorizontalExpand="True" Margin="6 6 6 6"/>
+            </PanelContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#37363e"/>
+                </PanelContainer.PanelOverride>
+                <RichTextLabel Name="Desc" HorizontalExpand="True" Margin="6 6 6 6"/>
+            </PanelContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <RichTextLabel Name="Status" HorizontalExpand="True" Margin="4 4 4 4"/>
+            <Button Name="UseButton"
+                    Margin="4 4 4 4"
+                    Text="Switch"
+                    HorizontalAlignment="Right"/>
+        </BoxContainer>
+    </BoxContainer>
+</Control>
