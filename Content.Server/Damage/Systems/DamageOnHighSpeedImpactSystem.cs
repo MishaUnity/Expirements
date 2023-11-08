@@ -12,11 +12,12 @@ namespace Content.Server.Damage.Systems;
 
 public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly StunSystem _stun = default!;
 
     public override void Initialize()
     {
@@ -50,6 +51,17 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         _damageable.TryChangeDamage(uid, component.Damage * damageScale);
 
         _audio.PlayPvs(component.SoundHit, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
-        RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { uid }), Filter.Pvs(uid, entityManager: EntityManager));
+        _color.RaiseEffect(Color.Red, new List<EntityUid>() { uid }, Filter.Pvs(uid, entityManager: EntityManager));
+    }
+
+    public void ChangeCollide(EntityUid uid, float minimumSpeed, float stunSeconds, float damageCooldown, DamageOnHighSpeedImpactComponent? collide = null)
+    {
+        if (!Resolve(uid, ref collide, false))
+            return;
+
+        collide.MinimumSpeed = minimumSpeed;
+        collide.StunSeconds = stunSeconds;
+        collide.DamageCooldown = damageCooldown;
+        Dirty(uid, collide);
     }
 }

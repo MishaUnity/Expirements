@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Construction.Prototypes;
 
 [Prototype("construction")]
-public sealed class ConstructionPrototype : IPrototype
+public sealed partial class ConstructionPrototype : IPrototype
 {
     [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
 
@@ -70,7 +70,7 @@ public sealed class ConstructionPrototype : IPrototype
 
     [ViewVariables]
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("placementMode")]
     public string PlacementMode = "PlaceFree";

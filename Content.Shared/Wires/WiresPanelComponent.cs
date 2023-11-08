@@ -27,10 +27,10 @@ public sealed partial class WiresPanelComponent : Component
 
     [DataField("screwdriverCloseSound")]
     public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
-
-    [AutoNetworkedField]
-    public string? WiresPanelSecurityExamination = default!;
-
-    [AutoNetworkedField]
-    public bool WiresAccessible = true;
 }
+
+/// <summary>
+/// Event raised when a panel is opened or closed.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PanelChangedEvent(bool Open);

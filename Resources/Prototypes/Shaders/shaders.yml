@@ -76,3 +76,14 @@
   id: StaticEffect
   kind: source
   path: "/Textures/Shaders/static_effect.swsl"
+
+- type: shader
+  id: PaperStamp
+  kind: source
+  path: "/Textures/Shaders/paperstamp.swsl"
+  
+# Simple horizontal cut
+- type: shader
+  id: HorizontalCut
+  kind: source
+  path: "/Textures/Shaders/hcut.swsl"
