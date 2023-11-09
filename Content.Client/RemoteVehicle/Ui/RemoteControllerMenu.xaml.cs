@@ -12,9 +12,9 @@ using Linguini.Bundle.Errors;
 using Robust.Shared.Timing;
 using System.Data;
 using System.Numerics;
-using TerraFX.Interop.Windows;
 using Content.Shared.RemoteVehicle.Components;
 using Content.Shared.RemoteVehicle.Systems;
+using Robust.Shared.Graphics;
 
 namespace Content.Client.RemoteVehicle.Ui;
 

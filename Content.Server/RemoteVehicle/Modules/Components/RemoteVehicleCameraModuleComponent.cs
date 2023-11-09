@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Content.Server.RemoteVehicle.Modules.Components;
 
 [RegisterComponent]
-public sealed class RemoteVehicleCameraModuleComponent : Component
+public sealed partial class RemoteVehicleCameraModuleComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public bool CameraEnabled;

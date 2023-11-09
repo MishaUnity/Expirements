@@ -6,7 +6,7 @@ using Content.Shared.Movement.Systems;
 namespace Content.Shared.RemoteVehicle.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class RemoteVehicleControllerComponent : Component
+public sealed partial class RemoteVehicleControllerComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public RemoteVehicleComponent? ConnectedVehicle;
@@ -26,10 +26,10 @@ public enum RemoteControlUiKey : byte
 [Serializable, NetSerializable]
 public sealed class RemoteControlBoundUserInterfaceState : BoundUserInterfaceState
 {
-    public EntityUid? ConnectedVehicle;
-    public EntityUid[]? VehicleModules;
+    public NetEntity? ConnectedVehicle;
+    public NetEntity[]? VehicleModules;
 
-    public RemoteControlBoundUserInterfaceState(EntityUid? vehicle, EntityUid[]? modules)
+    public RemoteControlBoundUserInterfaceState(NetEntity? vehicle, NetEntity[]? modules)
     {
         ConnectedVehicle = vehicle;
         VehicleModules = modules;
@@ -48,9 +48,9 @@ public sealed class RemoteControlStartMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class RemoteControlModuleUseMessage : BoundUserInterfaceMessage
 {
-    public EntityUid ModuleUid;
+    public NetEntity ModuleUid;
 
-    public RemoteControlModuleUseMessage(EntityUid moduleUid)
+    public RemoteControlModuleUseMessage(NetEntity moduleUid)
     {
         ModuleUid = moduleUid;
     }

@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TerraFX.Interop.Windows;
 
 namespace Content.Server.RemoteVehicle.Modules.Systems
 {
@@ -47,21 +46,16 @@ namespace Content.Server.RemoteVehicle.Modules.Systems
             if (!EntityManager.TryGetComponent<ItemComponent>(args.Used, out var item))
                 return;
 
-            IContainer container = _container.GetContainer(uid, "items_container");
+            BaseContainer container = _container.GetContainer(uid, "items_container");
 
-            if (item.Size > 20)
-            {
-                _popup.PopupEntity(Loc.GetString("remote-vehicle-module-container-item-to-big-popup"), uid);
-                return;
-            }
-            else if (container.ContainedEntities.Count >= component.ContainerCapacity)
+            if (container.ContainedEntities.Count >= component.ContainerCapacity)
             {
                 _popup.PopupEntity(Loc.GetString("remote-vehicle-module-container-limit-popup"), uid);
                 return;
             }
 
             _audio.PlayPvs(component.InsertSound, uid);
-            container.Insert(args.Used);
+            _container.Insert(args.Used, container);
         }
 
         private void OnModuleInserted(EntityUid uid, RemoteVehicleContainerModuleComponent component, RemoteVehicleModuleInsertedEvent args)
@@ -87,7 +81,7 @@ namespace Content.Server.RemoteVehicle.Modules.Systems
 
             _audio.PlayPvs(component.EjectSound, uid);
 
-            IContainer container = _container.GetContainer(uid, "items_container");
+            BaseContainer container = _container.GetContainer(uid, "items_container");
             _container.RemoveEntity(uid, container.ContainedEntities.Last(), destination: Transform(component.VehicleUid.Value).Coordinates, force: true, reparent: true);
 
             UpdateModuleStatus(uid, component);
@@ -95,7 +89,7 @@ namespace Content.Server.RemoteVehicle.Modules.Systems
 
         private void UpdateModuleStatus(EntityUid uid, RemoteVehicleContainerModuleComponent component)
         {
-            IContainer container = _container.GetContainer(uid, "items_container");
+            BaseContainer container = _container.GetContainer(uid, "items_container");
 
             var moduleComp = Comp<RemoteVehicleModuleComponent>(uid);
             moduleComp.ModuleStatus = Loc.GetString("remote-vehicle-module-container-status",

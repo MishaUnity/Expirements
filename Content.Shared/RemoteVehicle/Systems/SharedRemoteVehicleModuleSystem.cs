@@ -17,9 +17,7 @@ namespace Content.Shared.RemoteVehicle.Systems;
 
 public abstract class SharedRemoteVehicleModuleSystem : EntitySystem
 {
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()

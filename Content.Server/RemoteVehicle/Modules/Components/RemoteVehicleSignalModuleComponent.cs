@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Content.Server.RemoteVehicle.Modules.Components;
 
 [RegisterComponent]
-public sealed class RemoteVehicleSignalModuleComponent : Component
+public sealed partial class RemoteVehicleSignalModuleComponent : Component
 {
     [DataField("radiuseMultiplier")]
     public float RadiuseMultiplier = 2f;

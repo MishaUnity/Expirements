@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Content.Server.RemoteVehicle.Modules.Components;
 
 [RegisterComponent]
-public sealed class RemoteVehicleTimerTriggerModuleComponent : Component
+public sealed partial class RemoteVehicleTimerTriggerModuleComponent : Component
 {
     [DataField("timerDelay")]
     public float TimerDelay = 3f;

@@ -33,7 +33,7 @@ public sealed partial class RemoteVehicleModuleComponent : Component
 
 public sealed class RemoteVehicleModuleInsertedEvent : EntityEventArgs
 {
-    public EntityUid VehicleUid;
+    public EntityUid VehicleUid { get; }
 
     public RemoteVehicleModuleInsertedEvent(EntityUid vehicleUid)
     {
@@ -43,7 +43,7 @@ public sealed class RemoteVehicleModuleInsertedEvent : EntityEventArgs
 
 public sealed class RemoteVehicleModuleRemovedEvent : EntityEventArgs
 {
-    public EntityUid VehicleUid;
+    public EntityUid VehicleUid { get; }
 
     public RemoteVehicleModuleRemovedEvent(EntityUid vehicleUid)
     {
@@ -53,8 +53,8 @@ public sealed class RemoteVehicleModuleRemovedEvent : EntityEventArgs
 
 public sealed class RemoteVehicleModuleStateChangedEvent : EntityEventArgs
 {
-    public EntityUid VehicleUid;
-    public bool Enabled;
+    public EntityUid VehicleUid { get; }
+    public bool Enabled { get; }
 
     public RemoteVehicleModuleStateChangedEvent(EntityUid vehicleUid, bool enabled)
     {
@@ -65,10 +65,10 @@ public sealed class RemoteVehicleModuleStateChangedEvent : EntityEventArgs
 
 public sealed class RemoteVehicleModuleUseEvent : EntityEventArgs
 {
-    public EntityUid? User;
+    public EntityUid? User { get; }
 
-    public EntityUid VehicleUid;
-    public EntityUid ControllerUid;
+    public EntityUid VehicleUid { get; }
+    public EntityUid ControllerUid { get; }
 
     public RemoteVehicleModuleUseEvent(EntityUid? user, EntityUid vehicleUid, EntityUid controllerUid)
     {

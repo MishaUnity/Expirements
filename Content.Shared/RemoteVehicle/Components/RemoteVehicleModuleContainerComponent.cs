@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Content.Shared.RemoteVehicle.Components;
 
 [RegisterComponent]
-public sealed class RemoteVehicleModuleContainerComponent : Component
+public sealed partial class RemoteVehicleModuleContainerComponent : Component
 {
     [DataField("containerId", required: true)]
     public string ContainerId = string.Empty;

@@ -22,8 +22,9 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Components;
 using Content.Server.UserInterface;
 using Robust.Server.GameObjects;
-using TerraFX.Interop.Windows;
 using System.Security.Cryptography;
+using Robust.Server.Toolshed.Commands.Players;
+using Robust.Shared.Player;
 
 namespace Content.Server.RemoteVehicle.Systems
 {
@@ -175,7 +176,7 @@ namespace Content.Server.RemoteVehicle.Systems
         {
             if (component.ConnectedVehicle != null)
             {
-                _moduleSystem.TryUseModule(msg.ModuleUid, msg.Session.AttachedEntity, uid, component.ConnectedVehicle.Owner);
+                _moduleSystem.TryUseModule(GetEntity(msg.ModuleUid), msg.Session.AttachedEntity, uid, component.ConnectedVehicle.Owner);
             }
 
             UpdateUi(uid, component);
@@ -188,7 +189,11 @@ namespace Content.Server.RemoteVehicle.Systems
 
             RemoteControlBoundUserInterfaceState state;
             if (component.ConnectedVehicle != null)
-                state = new RemoteControlBoundUserInterfaceState(component.ConnectedVehicle.Owner, _moduleSystem.TryGetModulesEntities(component.ConnectedVehicle.Owner));
+            {
+                var modulesEntities = _moduleSystem.TryGetModulesEntities(component.ConnectedVehicle.Owner);
+
+                state = new RemoteControlBoundUserInterfaceState(GetNetEntity(component.ConnectedVehicle.Owner), modulesEntities == null ? null : GetNetEntityArray(modulesEntities));
+            }
             else
                 state = new RemoteControlBoundUserInterfaceState(null, null);
 

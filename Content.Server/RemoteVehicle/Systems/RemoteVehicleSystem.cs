@@ -10,8 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TerraFX.Interop.DirectX;
-using TerraFX.Interop.Windows;
 using Content.Shared.Movement.Components;
 using System.Numerics;
 using Robust.Shared.Timing;

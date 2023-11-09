@@ -13,13 +13,13 @@ public abstract class SharedRemoteVehicleSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed class RemoteVehiclePryFinished : SimpleDoAfterEvent
+public sealed partial class RemoteVehiclePryFinished : SimpleDoAfterEvent
 {
 
 }
 
 [Serializable, NetSerializable]
-public sealed class RemoteVehicleScrewFinished : SimpleDoAfterEvent
+public sealed partial class RemoteVehicleScrewFinished : SimpleDoAfterEvent
 {
 
 }

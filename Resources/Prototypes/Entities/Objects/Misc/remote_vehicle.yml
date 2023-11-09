@@ -20,7 +20,7 @@
     drawRate: 3
     useRate: 0
   - type: Item
-    size: 25
+    size: Large
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -92,7 +92,7 @@
   name: drone frame
   components:
   - type: Item
-    size: 25
+    size: Large
   - type: Sprite
     sprite: Objects/Misc/remote_drone.rsi
     state: assembly
@@ -115,7 +115,7 @@
   parent: RemoteVehicleBase
   id: SyndicateRemoteDrone
   name: syndicate drone
-  description: Is it worth being afraid of this little toy?
+  description: Is it worth being afraid of this?
   components:
   - type: Sprite
     drawdepth: SmallMobs
@@ -157,7 +157,7 @@
     sprite: Objects/Misc/remote_controller.rsi
     state: icon
   - type: Item
-    size: 10
+    size: Normal
   - type: ActivatableUI
     key: enum.RemoteControlUiKey.Key
   - type: UserInterface
@@ -174,14 +174,14 @@
   abstract: true
   components:
   - type: Item
-    size: 5
+    size: Small
   - type: RemoteVehicleModule
 
 - type: entity
-  name: stealth module
+  name: stealth drone module
   parent: RemoteModuleBase
   id: RemoteModuleStealth
-  description: Suspicious module for a drone.
+  description: Suspicious module for a radio-controlled drones.
   components:
   - type: Sprite
     sprite: Objects/Misc/remote_module.rsi
@@ -193,16 +193,14 @@
   - type: RemoteVehicleStealthModule
 
 - type: entity
-  name: detonation module
+  name: detonation drone module
   parent: RemoteModuleBase
   id: RemoteModuleDetonation
-  description: Suspicious module for a drone.
+  description: Suspicious module for a radio-controlled drones.
   components:
   - type: Sprite
     sprite: Objects/Misc/remote_module.rsi
     state: bomb
-  - type: Item
-    size: 5
   - type: RemoteVehicleModule
     moduleName: remote-vehicle-module-bomb-name
     moduleDesc: remote-vehicle-module-bomb-desc
@@ -218,10 +216,10 @@
   - type: ExplodeOnTrigger
 
 - type: entity
-  name: container module
+  name: container drone module
   parent: RemoteModuleBase
   id: RemoteModuleContainer
-  description: A module for drone;
+  description: Module for a radio-controlled drones.
   components:
   - type: Sprite
     sprite: Objects/Misc/remote_module.rsi
@@ -238,10 +236,10 @@
     ejectSound: "/Audio/Machines/disposalflush.ogg"
 
 - type: entity
-  name: signal boost module
+  name: signal boost drone module
   parent: RemoteModuleBase
   id: RemoteModuleSignal
-  description: A module for drone;
+  description: Module for a radio-controlled drones.
   components:
   - type: Sprite
     sprite: Objects/Misc/remote_module.rsi
@@ -252,10 +250,10 @@
     radiuseMultiplier: 2
 
 - type: entity
-  name: acceleration module
+  name: acceleration drone module
   parent: RemoteModuleBase
   id: RemoteModuleSpeed
-  description: A module for drone;
+  description: Module for a radio-controlled drones.
   components:
   - type: Sprite
     sprite: Objects/Misc/remote_module.rsi
@@ -266,10 +264,10 @@
     speedMultiplier: 2
 
 - type: entity
-  name: broadcast module
+  name: broadcast drone module
   parent: RemoteModuleBase
   id: RemoteModuleCamera
-  description: A module for drone;
+  description: Module for a radio-controlled drones.
   components:
   - type: Sprite
     sprite: Objects/Misc/remote_module.rsi

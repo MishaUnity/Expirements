@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Content.Server.RemoteVehicle.Modules.Components;
 
 [RegisterComponent]
-public sealed class RemoteVehicleSpeedModuleComponent : Component
+public sealed partial class RemoteVehicleSpeedModuleComponent : Component
 {
     [DataField("speedMultiplier")]
     public float SpeedMultiplier = 1.5f;

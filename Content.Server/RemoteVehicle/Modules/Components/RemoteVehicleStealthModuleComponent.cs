@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Content.Server.RemoteVehicle.Modules.Components;
 
 [RegisterComponent]
-public sealed class RemoteVehicleStealthModuleComponent : Component
+public sealed partial class RemoteVehicleStealthModuleComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? VehicleUid;

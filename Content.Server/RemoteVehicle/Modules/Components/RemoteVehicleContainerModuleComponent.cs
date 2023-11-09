@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Content.Server.RemoteVehicle.Modules.Components;
 
 [RegisterComponent]
-public sealed class RemoteVehicleContainerModuleComponent : Component
+public sealed partial class RemoteVehicleContainerModuleComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? VehicleUid;

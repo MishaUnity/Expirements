@@ -1,0 +1,2 @@
+uplink-syndicate-drone-bundle-name = Syndicate drone kit
+uplink-syndicate-drone-bundle-desc = Not just a child's toy, but a wonderful device for espionage and sabotage. Includes drone, remote control, detonation and stealth module, and power cell.

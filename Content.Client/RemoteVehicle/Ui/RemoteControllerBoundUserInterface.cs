@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Robust.Shared.Utility;
 using Content.Shared.RemoteVehicle.Components;
 using Robust.Client.Graphics;
-using TerraFX.Interop.Windows;
 using Content.Shared.RemoteVehicle.Systems;
 
 namespace Content.Client.RemoteVehicle.Ui;
@@ -64,7 +63,9 @@ public sealed class RemoteControllerBoundUserInterface : BoundUserInterface
         if (_menu == null || state is not RemoteControlBoundUserInterfaceState cast)
             return;
 
-        if (cast.ConnectedVehicle == null)
+        EntityUid? vehicleEntity = EntMan.GetEntity(cast.ConnectedVehicle);
+
+        if (vehicleEntity == null)
         {
             _menu.UpdateUiState(null, _spriteSystem, null, null);
 
@@ -78,20 +79,20 @@ public sealed class RemoteControllerBoundUserInterface : BoundUserInterface
         {
             if (_currentVehicle == null)
             {
-                _eyeLerpingSystem.AddEye(cast.ConnectedVehicle.Value);
-                _currentVehicle = cast.ConnectedVehicle;
+                _eyeLerpingSystem.AddEye(vehicleEntity.Value);
+                _currentVehicle = vehicleEntity;
             }
-            else if (_currentVehicle != cast.ConnectedVehicle)
+            else if (_currentVehicle != vehicleEntity)
             {
                 _eyeLerpingSystem.RemoveEye(_currentVehicle.Value);
-                _eyeLerpingSystem.AddEye(cast.ConnectedVehicle.Value);
-                _currentVehicle = cast.ConnectedVehicle;
+                _eyeLerpingSystem.AddEye(vehicleEntity.Value);
+                _currentVehicle = vehicleEntity;
             }
 
-            if (EntMan.TryGetComponent<EyeComponent>(cast.ConnectedVehicle, out var eyeComp) &&
-                EntMan.TryGetComponent<RemoteVehicleComponent>(cast.ConnectedVehicle, out var vehicleComp))
+            if (EntMan.TryGetComponent<EyeComponent>(vehicleEntity, out var eyeComp) &&
+                EntMan.TryGetComponent<RemoteVehicleComponent>(vehicleEntity, out var vehicleComp))
             {
-                _menu.UpdateUiState(eyeComp.Eye, _spriteSystem, vehicleComp, GetModulesComp(cast.VehicleModules));
+                _menu.UpdateUiState(eyeComp.Eye, _spriteSystem, vehicleComp, GetModulesComp(cast.VehicleModules == null ? null : EntMan.GetEntityArray(cast.VehicleModules)));
             }
         }
     }
@@ -103,7 +104,7 @@ public sealed class RemoteControllerBoundUserInterface : BoundUserInterface
 
     private void OnModuleUseButtonPressed(EntityUid moduleUid)
     {
-        SendMessage(new RemoteControlModuleUseMessage(moduleUid));
+        SendMessage(new RemoteControlModuleUseMessage(EntMan.GetNetEntity(moduleUid)));
     }
 
     private RemoteVehicleModuleComponent[]? GetModulesComp(EntityUid[]? modules)
@@ -112,7 +113,7 @@ public sealed class RemoteControllerBoundUserInterface : BoundUserInterface
             return null;
 
         var result = new RemoteVehicleModuleComponent[modules.Length];
-        for (int i = 0; i < modules.Length; i ++)
+        for (int i = 0; i < modules.Length; i++)
         {
             result[i] = EntMan.GetComponent<RemoteVehicleModuleComponent>(modules[i]);
         }
