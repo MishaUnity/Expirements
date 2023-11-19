@@ -11,7 +11,7 @@ public sealed partial class RemoteVehicleControllerComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public RemoteVehicleComponent? ConnectedVehicle;
 
-    public List<InputMoverComponent> CurrentPilots = new List<InputMoverComponent>();
+    public List<EntityUid> CurrentUsers = new List<EntityUid>();
 
     [ViewVariables(VVAccess.ReadWrite)]
     public MoveButtons CurrentInput;

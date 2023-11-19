@@ -25,6 +25,7 @@ using Robust.Server.GameObjects;
 using System.Security.Cryptography;
 using Robust.Server.Toolshed.Commands.Players;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.RemoteVehicle.Systems
 {
@@ -33,8 +34,8 @@ namespace Content.Server.RemoteVehicle.Systems
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly MoverController _moverController = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+        [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriber = default!;
 
         [Dependency] private readonly RemoteVehicleSystem _vehicleSystem = default!;
@@ -46,6 +47,7 @@ namespace Content.Server.RemoteVehicle.Systems
             base.Initialize();
 
             SubscribeLocalEvent<RemoteVehicleControllerComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<RemoteVehicleControllerComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<RemoteVehicleControllerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<RemoteVehicleControllerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
@@ -55,6 +57,8 @@ namespace Content.Server.RemoteVehicle.Systems
 
             SubscribeLocalEvent<RemoteVehicleControllerComponent, RemoteControlStartMessage>(OnControlUiStartMessage);
             SubscribeLocalEvent<RemoteVehicleControllerComponent, RemoteControlModuleUseMessage>(OnControlUiModuleUseMessage);
+
+            SubscribeLocalEvent<RemoteVehicleControllerUserComponent, UpdateCanMoveEvent>(HandleMovementBlock);
         }
 
         public override void Update(float frameTime)
@@ -64,8 +68,10 @@ namespace Content.Server.RemoteVehicle.Systems
             var controlQuery = AllEntityQuery<RemoteVehicleControllerComponent>();
             while (controlQuery.MoveNext(out var uid, out var comp))
             {
-                foreach (var mover in comp.CurrentPilots)
+                foreach (var user in comp.CurrentUsers)
                 {
+                    var mover = Comp<InputMoverComponent>(user);
+
                     if (mover.HeldMoveButtons != MoveButtons.None)
                     {
                         SetInput(comp, mover.HeldMoveButtons);
@@ -80,6 +86,12 @@ namespace Content.Server.RemoteVehicle.Systems
         private void OnInit(EntityUid uid, RemoteVehicleControllerComponent component, ComponentInit args)
         {
             base.Initialize();
+        }
+
+        private void OnShutdown(EntityUid uid, RemoteVehicleControllerComponent component, ComponentShutdown args)
+        {
+            DisconnectVehicle(component);
+            ClearUsers(component);
         }
 
         private void OnAfterInteract(EntityUid uid, RemoteVehicleControllerComponent component, AfterInteractEvent args)
@@ -118,10 +130,7 @@ namespace Content.Server.RemoteVehicle.Systems
         {
             if (TryComp<InputMoverComponent>(args.User, out var mover))
             {
-                component.CurrentPilots.Add(mover);
-
-                _alertsSystem.ShowAlert(args.User, AlertType.PilotingShuttle);
-                mover.CanMove = false;
+                AddUser(args.User, component);
 
                 if (component.ConnectedVehicle != null)
                 {
@@ -141,14 +150,9 @@ namespace Content.Server.RemoteVehicle.Systems
                 return;
             }
 
-            if (TryComp<InputMoverComponent>(user, out var mover))
+            if (HasComp<RemoteVehicleControllerUserComponent>(user))
             {
-                component.CurrentPilots.Remove(mover);
-
-                _alertsSystem.ClearAlert(user, AlertType.PilotingShuttle);
-
-                mover.CanMove = true;
-                _actionBlocker.UpdateCanMove(user);
+                RemoveUser(user);
 
                 if (component.ConnectedVehicle != null)
                 {
@@ -231,6 +235,52 @@ namespace Content.Server.RemoteVehicle.Systems
             component.ConnectedVehicle = null;
 
             UpdateUi(component.Owner, component);
+        }
+
+        private void HandleMovementBlock(EntityUid uid, RemoteVehicleControllerUserComponent component, UpdateCanMoveEvent args)
+        {
+            if (component.LifeStage > ComponentLifeStage.Running)
+                return;
+            if (component.Controller == null)
+                return;
+
+            args.Cancel();
+        }
+
+        private void RemoveUser(EntityUid uid)
+        {
+            var userComp = Comp<RemoteVehicleControllerUserComponent>(uid);
+
+            if (userComp.Controller == null)
+                return;
+
+            var controllerComp = Comp<RemoteVehicleControllerComponent>(userComp.Controller.Value);
+            controllerComp.CurrentUsers.Remove(uid);
+
+            RemComp<RemoteVehicleControllerUserComponent>(uid);
+
+            //_alerts.ClearAlert(uid, AlertType.PilotingShuttle);
+            _actionBlocker.UpdateCanMove(uid);
+        }
+
+        private void ClearUsers(RemoteVehicleControllerComponent component)
+        {
+            foreach (var user in component.CurrentUsers)
+                RemoveUser(user);
+        }
+
+        private void AddUser(EntityUid uid, RemoteVehicleControllerComponent controller)
+        {
+            if (HasComp<RemoteVehicleControllerUserComponent>(uid))
+                return;
+
+            var userComp = AddComp<RemoteVehicleControllerUserComponent>(uid);
+
+            userComp.Controller = controller.Owner;
+            controller.CurrentUsers.Add(uid);
+
+            //_alerts.ShowAlert(uid, AlertType.PilotingShuttle);
+            _actionBlocker.UpdateCanMove(uid);
         }
 
         private void SetInput(RemoteVehicleControllerComponent component, MoveButtons buttons)
