@@ -259,7 +259,6 @@ namespace Content.Server.RemoteVehicle.Systems
 
             RemComp<RemoteVehicleControllerUserComponent>(uid);
 
-            //_alerts.ClearAlert(uid, AlertType.PilotingShuttle);
             _actionBlocker.UpdateCanMove(uid);
         }
 
@@ -279,7 +278,6 @@ namespace Content.Server.RemoteVehicle.Systems
             userComp.Controller = controller.Owner;
             controller.CurrentUsers.Add(uid);
 
-            //_alerts.ShowAlert(uid, AlertType.PilotingShuttle);
             _actionBlocker.UpdateCanMove(uid);
         }
 

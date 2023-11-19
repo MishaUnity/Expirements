@@ -214,11 +214,6 @@ namespace Content.Server.RemoteVehicle.Systems
             {
                 if (!_powerCell.TryGetBatteryFromSlot(uid, out _))
                     args.PushMarkup(Loc.GetString("remote-vehicle-markup-no-battery"));
-
-                var modulesText = Loc.GetString("remote-vehicle-markup-no-modules");
-                if (component.InsertedModules != null && component.InsertedModules.Any())
-                    modulesText = Loc.GetString("remote-vehicle-markup-modules-prefix") + " " + component.InsertedModules.Length;
-                args.PushMarkup(modulesText);
             }
         }
 

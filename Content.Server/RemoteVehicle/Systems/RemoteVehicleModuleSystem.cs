@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Content.Shared.RemoteVehicle.Components;
 using Robust.Server.Containers;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Examine;
 
 namespace Content.Server.RemoteVehicle.Systems
 {
@@ -22,6 +23,7 @@ namespace Content.Server.RemoteVehicle.Systems
             base.Initialize();
 
             SubscribeLocalEvent<RemoteVehicleModuleContainerComponent, RemoteVehiclePryFinished>(OnPryFinished);
+            SubscribeLocalEvent<RemoteVehicleModuleContainerComponent, ExaminedEvent>(OnExamine);
         }
 
         public bool TryUseModule(EntityUid moduleUid, EntityUid? user, EntityUid controllerUid, EntityUid vehicleUid)
@@ -62,6 +64,13 @@ namespace Content.Server.RemoteVehicle.Systems
 
             EjectModules(component, uid);
             _audioSystem.PlayPvs(component.EjectSound, uid);
+        }
+
+        private void OnExamine(EntityUid uid, RemoteVehicleModuleContainerComponent component, ExaminedEvent args)
+        {
+            args.PushMarkup(Loc.GetString("remote-vehicle-markup-modules",
+                ("current", _containerSystem.GetContainer(uid, component.ContainerId).ContainedEntities.Count),
+                ("capacity", component.ContainerCapacity)));
         }
 
         public void EjectModules(RemoteVehicleModuleContainerComponent component, EntityUid uid)
