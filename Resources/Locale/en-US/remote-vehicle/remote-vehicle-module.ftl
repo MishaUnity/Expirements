@@ -1,5 +1,3 @@
-remote-vehicle-markup-modules = Module slots {$current}/{$capacity}
-
 #Timer Trigger 
 remote-vehicle-module-timer-trigger-avalible = Avalible
 remote-vehicle-module-bomb-name = Detonation Module

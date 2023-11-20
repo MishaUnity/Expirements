@@ -1,21 +1,5 @@
-using Content.Server.Popups;
 using Content.Server.RemoteVehicle.Modules.Components;
-using Content.Server.Stealth;
-using Content.Shared.Interaction;
-using Content.Shared.Item;
-using Content.Shared.PowerCell;
 using Content.Shared.RemoteVehicle.Components;
-using Content.Shared.RemoteVehicle.Systems;
-using Content.Shared.Stealth.Components;
-using Robust.Server.Containers;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Containers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Server.RemoteVehicle.Modules.Systems
 {

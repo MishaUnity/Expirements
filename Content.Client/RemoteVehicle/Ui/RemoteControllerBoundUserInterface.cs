@@ -1,10 +1,7 @@
 using Robust.Client.GameObjects;
 using Content.Client.Eye;
 using JetBrains.Annotations;
-using Robust.Shared.Utility;
 using Content.Shared.RemoteVehicle.Components;
-using Robust.Client.Graphics;
-using Content.Shared.RemoteVehicle.Systems;
 
 namespace Content.Client.RemoteVehicle.Ui;
 

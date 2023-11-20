@@ -1,5 +1,4 @@
 using Content.Shared.DoAfter;
-using Content.Shared.PowerCell;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.RemoteVehicle.Systems;

@@ -8,12 +8,8 @@ using Robust.Shared.Prototypes;
 using Robust.Client.ResourceManagement;
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
-using Linguini.Bundle.Errors;
 using Robust.Shared.Timing;
-using System.Data;
-using System.Numerics;
 using Content.Shared.RemoteVehicle.Components;
-using Content.Shared.RemoteVehicle.Systems;
 using Robust.Shared.Graphics;
 
 namespace Content.Client.RemoteVehicle.Ui;

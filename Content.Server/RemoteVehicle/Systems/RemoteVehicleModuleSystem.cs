@@ -1,14 +1,8 @@
 using Content.Shared.RemoteVehicle.Systems;
 using Robust.Server.GameObjects;
-using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Content.Shared.RemoteVehicle.Components;
 using Robust.Server.Containers;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 
 namespace Content.Server.RemoteVehicle.Systems

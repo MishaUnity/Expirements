@@ -1,6 +1,5 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 
 namespace Content.Shared.RemoteVehicle.Components;

@@ -2,13 +2,7 @@ using Content.Server.RemoteVehicle.Modules.Components;
 using Content.Server.Stealth;
 using Content.Shared.PowerCell;
 using Content.Shared.RemoteVehicle.Components;
-using Content.Shared.RemoteVehicle.Systems;
 using Content.Shared.Stealth.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Server.RemoteVehicle.Modules.Systems
 {
